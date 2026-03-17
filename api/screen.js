@@ -14,7 +14,10 @@ export default async function handler(req, res) {
   try {
     const { resumeText, criteria, fileName } = req.body;
 
-    const key = process.env.OPENAI_API_KEY;
+    const key = process.env.VECTORENGINE_API_KEY;
+    const baseUrl = process.env.API_BASE_URL || 'https://api.openai.com';
+    const model = process.env.API_MODEL || 'gpt-4o-mini';
+
     if (!key) {
       return res.status(500).json({ error: '服务端未配置 API Key，请联系管理员。' });
     }
@@ -54,14 +57,14 @@ ${resumeText}
 
 请按照要求的JSON格式进行评估。`;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch(`${baseUrl}/v1/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${key}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: model,
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
