@@ -1,0 +1,6 @@
+{
+  "name": "ai-resume-screener",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI 简历筛选助手 - 基于 OpenAI GPT 的智能简历批量筛选工具"
+}
